@@ -18,12 +18,16 @@
 
                 <!-- Logo -->
                 <router-link to="/" class="navbar-brand" href="#">
-                    <img src="/img/logoblack1.png"
-                        alt="White Hathi" height="60" :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
+                    <img src="/img/logoblack1.png" alt="White Hathi" height="60"
+                        :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
                 </router-link>
 
                 <!-- Icons -->
                 <div class="d-flex align-items-center gap-3">
+                    <router-link to="/wishlist-page" class="text-decoration-none"
+                        :style="{ color: isScrolled ? 'black' : 'white' }">
+                        <i class="bi bi-heart fs-5"></i>
+                    </router-link>
                     <i class="bi bi-person fs-4" :style="{ color: isScrolled ? 'black' : 'white' }"></i>
                     <router-link to="/cart-page" class="text-decoration-none"
                         :style="{ color: isScrolled ? 'black' : 'white' }">
@@ -109,8 +113,8 @@
             <div class="offcanvas-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Logo -->
-                    <img src="/img/logoblack1.png"
-                        alt="White Hathi" height="50" :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
+                    <img src="/img/logoblack1.png" alt="White Hathi" height="50"
+                        :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
 
                     <!-- Search -->
                     <div class="search-container border border-2 w-50 ">
@@ -138,16 +142,24 @@
         <nav :class="['navbar navbar-light text-white d-lg-none position-fixed w-100 top-0', { 'scrolled': isScrolled }]"
             style="z-index: 100; transition: background 0.3s, color 0.3s;">
             <div class="container">
-                <i class="bi bi-list fs-1 text-dark" data-bs-toggle="offcanvas" data-bs-target="#mobileSideMenu"
-                    aria-controls="mobileSideMenu"></i>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-list fs-1 text-dark" data-bs-toggle="offcanvas" data-bs-target="#mobileSideMenu"
+                        aria-controls="mobileSideMenu"></i>
+                    <i class="bi bi-search text-dark fs-4"></i>
+                </div>
                 <router-link to="/" class="navbar-brand">
-                    <img src="/img/logoblack1.png"
-                        alt="White Hathi" height="50" :style="{ filter: isScrolled ? 'invert(0)' : 'invert(0)' }" />
+                    <img src="/img/logoblack1.png" alt="White Hathi" height="50"
+                        :style="{ filter: isScrolled ? 'invert(0)' : 'invert(0)' }" />
 
                 </router-link>
-                <router-link to="/cart-page" class="text-dark">
-                    <i class="bi bi-bag fs-1"></i>
-                </router-link>
+                <div class="d-flex align-items-center gap-2">
+                    <router-link to="/wishlist-page" class="text-dark">
+                        <i class="bi bi-heart fs-5"></i>
+                    </router-link>
+                    <router-link to="/cart-page" class="text-dark">
+                        <i class="bi bi-cart fs-5"></i>
+                    </router-link>
+                </div>
             </div>
         </nav>
 
