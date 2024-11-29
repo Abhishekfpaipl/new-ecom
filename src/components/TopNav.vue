@@ -18,7 +18,7 @@
 
                 <!-- Logo -->
                 <router-link to="/" class="navbar-brand" href="#">
-                    <img src="https://whitehathi.com/cdn/shop/files/White_Hathi_PDF_WH_white.png?v=1726855966"
+                    <img src="/img/logoblack1.png"
                         alt="White Hathi" height="60" :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
                 </router-link>
 
@@ -109,7 +109,7 @@
             <div class="offcanvas-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Logo -->
-                    <img src="https://whitehathi.com/cdn/shop/files/White_Hathi_PDF_WH_1-01.png?v=1726853574&width=500"
+                    <img src="/img/logoblack1.png"
                         alt="White Hathi" height="50" :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
 
                     <!-- Search -->
@@ -141,7 +141,7 @@
                 <i class="bi bi-list fs-1 text-dark" data-bs-toggle="offcanvas" data-bs-target="#mobileSideMenu"
                     aria-controls="mobileSideMenu"></i>
                 <router-link to="/" class="navbar-brand">
-                    <img src="https://whitehathi.com/cdn/shop/files/White_Hathi_PDF_WH_1-01.png?v=1726853574&width=500"
+                    <img src="/img/logoblack1.png"
                         alt="White Hathi" height="50" :style="{ filter: isScrolled ? 'invert(0)' : 'invert(0)' }" />
 
                 </router-link>

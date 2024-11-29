@@ -1,5 +1,5 @@
 <template>
-    <div class="container top-padding">
+    <div class="container" style="padding-top: 80px;">
         <div class="row mt-3">
             <!-- Product Images -->
             <!-- <div class="col-md-6 col-12">
@@ -19,9 +19,9 @@
             </div> -->
 
             <div class="col-md-6 col-12">
-                <div class="row sticky-image">
+                <div class="row">
                     <!-- Thumbnail Images -->
-                    <div class="col-2" style="max-height: 300px; overflow-y: auto;">
+                    <div class="col-2">
                         <div class="row">
                             <div class="col-12 mb-3" v-for="(image, index) in thumbnails" :key="index">
                                 <img :src="image" class="img-fluid" style="width: 50px; cursor: pointer;"
@@ -30,8 +30,14 @@
                         </div>
                     </div>
 
-                    <!-- Main Image with LightGallery -->
-                    <div class="col-10">
+                    <!-- Main Image with Arrows -->
+                    <div class="col-10 position-relative">
+                        <button class="arrow-btn left-arrow" @click="prevImage" aria-label="Previous Image">
+                            ←
+                        </button>
+                        <button class="arrow-btn right-arrow" @click="nextImage" aria-label="Next Image">
+                            →
+                        </button>
                         <div ref="lightGallery" class="lightgallery">
                             <a href="javascript:void(0);" class="d-block" @click.prevent="openGallery">
                                 <img :src="mainImage" class="img-fluid" alt="Main product image" />
@@ -40,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!-- Product Details -->
             <div class="col-md-6">
@@ -60,67 +65,6 @@
 
                 <p class="text-muted small mb-0 text-md-start text-center">Inclusive of all taxes. Shipping calculated
                     at checkout.</p>
-
-
-                <!-- Color Selection -->
-                <div class="row">
-                    <div class="col-12">
-                        <p class="text-start mt-3 mb-1 fs-5 fw-bold">OFFERS</p>
-                        <ul class="list-unstyled">
-                            <li v-for="offer in offers" :key="offer.id" class="d-flex align-items-center mb-2">
-                                <i class="bi bi-check text-success me-2 fs-5"></i>
-                                <span>{{ offer }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="text-start mt-3 fs-5 fw-bold">CHOOSE YOUR ALPHABET</p>
-                        <div class="row row-cols-6 g-3">
-                            <div v-for="letter in alphabet" :key="letter" class="col mb-3">
-                                <div class="btn border rounded-0 w-100 p-2"
-                                    :class="{ 'btn-dark': selectedLetter === letter }" @click="selectLetter(letter)">
-                                    {{ letter }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="text-start mt-3 fs-5">POLISH : <span class="fw-bold ">{{ selectedColor ?
-                            selectedColor.name :
-                                "None" }}</span></p>
-                        <div class="d-flex align-items-center gap-3">
-                            <div v-for="color in colors" :key="color.id"
-                                class="d-flex flex-column align-items-center mb-3">
-                                <label class="d-flex flex-column align-items-center">
-                                    <input type="radio" :value="color" v-model="selectedColor" class="d-none" />
-                                    <div class="rounded-circle"
-                                        :class="['polish-color', selectedColor && selectedColor.bgColor === color.bgColor ? 'border border-2 border-dark' : '']"
-                                        :style="{ backgroundColor: color.bgColor }" style="height: 50px; width:50px;">
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <p class="text-start mt-3 fs-5">CHARMS: ZODIAC SIGN</p>
-                        <div class="row row-cols-4 g-3">
-                            <div class="col mb-3" v-for="charm in charms" :key="charm.id" @click="selectCharm(charm)"
-                                style="cursor: pointer;">
-                                <img :src="charm.image" class="rounded-circle"
-                                    :class="{ 'border border-2 border-dark': selectedCharm && selectedCharm.id === charm.id }"
-                                    alt="" style="height: 50px;width: 50px;">
-                                <p class="text-center">{{ charm.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Size Selection -->
                 <div class="d-flex justify-content-md-start justify-content-center align-items-center gap-3 mt-3">
@@ -150,7 +94,7 @@
                 </div>
 
                 <!-- Purchase Options -->
-                <!-- <div class="my-3 border p-3">
+                <div class="my-3 border p-3">
                     <div class="form-check border-bottom text-md-start text-center pb-2">
                         <input class="form-check-input" type="radio" v-model="purchaseType" value="one-time"
                             id="one-time">
@@ -169,7 +113,7 @@
                         </label>
                     </div>
                     <small class="text-muted d-block mt-1">You will get a 5% discount on every recurring order.</small>
-                </div> -->
+                </div>
 
                 <button class="btn btn-dark d-flex justify-content-between align-items-center w-100 my-3">
                     <div class="d-flex gap-2 align-items-center">
@@ -239,101 +183,82 @@
         <!-- <div class="my-5">
             <ProductsCard :products=secondaryProducts title="You Might also like" v-observe />
         </div> -->
-
         <div class="my-5">
-            <ProductsCard :products="products" title="CUSTOMERS ALSO VIEWED" v-observe />
-        </div>
-
-        <div class="my-5">
-            <ReviewSection v-observe />
-        </div>
-        <div class="my-5">
-            <!-- <ProductReview v-observe /> -->
+            <ProductReview v-observe />
         </div>
     </div>
 </template>
 
 <script>
 import lgZoom from "lightgallery/plugins/zoom";
-import lgThumbnail from "lightgallery/plugins/thumbnail"; // Import the thumbnail plugin
+import lgThumbnail from "lightgallery/plugins/thumbnail";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 import "lightgallery/css/lg-thumbnail.css";
 import LightGallery from "lightgallery/lightgallery.es5";
 
-import ProductsCard from "@/components/ProductsCard.vue"
-import ReviewSection from "@/components/ReviewSection.vue"
-// import ProductReview from "@/components/ProductReview.vue"
+// import ProductsCard from "@/components/ProductsCard.vue"
+import ProductReview from "@/components/ProductReview.vue"
 export default {
     components: {
-        ProductsCard,
-        ReviewSection,
-        // ProductReview,
+        // ProductsCard,
+        ProductReview,
     },
     data() {
         return {
-            productName: 'Abella',
+            productName: 'Lakme 9 To 5 Complexion Care Face CC Cream, Beige, SPF 30, Conceals Dark Spots & Blemishes, 30 g (Packaging may vary)',
             rating: 3.7,
             reviewCount: "45",
             originalPrice: "338.00",
             currentPrice: "375.00",
             savings: "37.00",
-            // sizes: [
-            //     { weight: 125, price: "338.00", originalPrice: "375.00" },
-            //     { weight: 75, price: "290.00" }
-            // ],
-            selectedColor: null, // This will hold the entire color object
-            colors: [
-                { id: 1, name: "Gold", bgColor: "gold" },
-                { id: 2, name: "Rose Gold", bgColor: "mistyrose" },
-                { id: 3, name: "Silver", bgColor: "grey" },
+            sizes: [
+                { weight: 125, price: "338.00", originalPrice: "375.00" },
+                { weight: 75, price: "290.00" }
             ],
             selectedSize: 125,
             quantity: 1,
             purchaseType: 'one-time',
             subscriptionInterval: 15,
             thumbnails: [
-                "https://whitehathi.com/cdn/shop/files/IMG_9856.jpg?v=1706217863&width=823",
-                "https://whitehathi.com/cdn/shop/files/0N8A0936.jpg?v=1706217863&width=823",
-                "https://whitehathi.com/cdn/shop/products/DAJ06527.jpg?v=1706217863",
-                "https://whitehathi.com/cdn/shop/products/image12_c890a190-5d48-42cf-bbec-6162c706036e.jpg?v=1706217863&width=823",
-                "https://whitehathi.com/cdn/shop/products/WhatsAppImage2022-02-09at16.58.31_1_120fdb7f-6e86-4d22-b7c3-31f9326d500f.jpg?v=1706217863&width=823",
-                "https://whitehathi.com/cdn/shop/files/0N8A0937.jpg?v=1706217863&width=823",
+                "https://m.media-amazon.com/images/I/51G+CJkiLUL._SX679_.jpg",
+                "https://m.media-amazon.com/images/I/51FaOMJo19L._SX425_.jpg",
+                "https://m.media-amazon.com/images/I/51idyVN4DfL._SX425_.jpg",
+                "https://m.media-amazon.com/images/I/41EA-pNJ--L._SX425_.jpg",
+                "https://m.media-amazon.com/images/I/51SGj88HplL._SX425_.jpg",
+                "https://m.media-amazon.com/images/I/51P7+uAmCYL._SX425_.jpg",
             ],
             mainImage:
-                "https://whitehathi.com/cdn/shop/files/IMG_9856.jpg?v=1706217863&width=823",
+                "https://m.media-amazon.com/images/I/51G+CJkiLUL._SX679_.jpg",
             lightGalleryInstance: null,
-
-            offers: [
-                'Get FLAT 15% OFF',
-                '1 Year Anti-Tarnish Warranty',
-                'Free Silver Pendant on Prepaid orders above ₹3000',
-                'Easy Returns & Exchange'
-            ],
-            selectedLetter: null, // Property to track the selected letter
-            alphabet: [
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-            ],
-            selectedCharm: null, // Property to store the selected charm
-            charms: [
-                { id: 1, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_26.png", name: 'Capricorn' },
-                { id: 2, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_29.png", name: 'Aquarius' },
-                { id: 3, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_32.png", name: 'Pisces' },
-                { id: 4, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_34.png", name: 'Aries' },
-                { id: 5, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_27.png", name: 'Taurus' },
-                { id: 6, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_30.png", name: 'Gemini' },
-                { id: 7, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_33.png", name: 'Cancer' },
-                { id: 8, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_35.png", name: 'Leo' },
-                { id: 9, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_28.png", name: 'Virgo' },
-                { id: 10, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_31.png", name: 'Libra' },
-                { id: 11, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_36.png", name: 'Scorpio' },
-                { id: 12, image: "https://cdn.shopify.com/s/files/1/0577/1293/5121/files/Ellipse_37.png", name: 'Sagittarius' }
-            ],
+            transitioning: false,
 
             title: 'About this product',
             description: 'For women who are on the go and could use the extra minutes before stepping out|| Lakme CC cream is here to the rescue. This cream acts as your everyday instant skin stylist and lets you get that perfect look of makeup + skincare for any occasion. It may be work|| party or simply an evening with friends; your personal stylist will help you get the right look for it all. It’s time to move on to a simpler regime without comprising on skincare. The Lakme CC cream moistures|| brightens and freshens your skin while enriching it with a hint of makeup. With sun protection of SPF 30 and makeup benefits like even skin tone and skin coverage|| this cream takes complete care of your complexion. The beige variant of this CC cream blends in seamlessly when applied on light to wheatish skin tone. This cream can also be used along with other products or on its own if you prefer just the lightest touch of make-up. Furthermore|| the Lakme CC cream comes in a chic sturdy packaging with a well fitted rose gold cap. Lakme 9 to 5 CC Cream brings you the best of both worlds: It’s skincare with a touch of makeup to give you the perfect look|| for any occasion|| in an instant.*OLD',
-
+            sections: [
+                {
+                    title: 'INGREDIENTS',
+                    content: 'Cyclopentasiloxane, Ethylhexyl Methoxycinnamate, Glycerin.'
+                },
+                {
+                    title: 'DIRECTIONS',
+                    content: 'Take a pea sized amount and dot across face. Dap the cream gently with finger-tips till it completely blends into the skin.'
+                },
+                {
+                    title: 'MANUFACTURER INFORMATION',
+                    content: `
+            <p><strong>Item Type:</strong> Cream</p>
+            <p><strong>Colour:</strong> Beige</p>
+            <p><strong>Skin Type:</strong> All</p>
+            <p><strong>Finish Type:</strong> Natural</p>
+            <p><strong>Recommended Uses For Product:</strong> Dark Spots</p>
+            <p><strong>Material Type Free:</strong> Alcohol Free</p>
+            <p><strong>Package Information:</strong> Tube</p>
+            <p><strong>Brand:</strong> LAKMÉ</p>
+            <p><strong>Coverage:</strong> Light</p>
+            <p><strong>Product Benefits:</strong> Moisturizing</p> `
+                }
+            ],
             "ingredients": [
                 {
                     "image": "/img/badges/1.png",
@@ -409,34 +334,14 @@ export default {
                     image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAMbmlDQ1BJQ0MgUHJvZmlsZQAASImVVwdYU8kWnluSkJDQAghICb0JIjWAlBBaAOndRkgCCSXGhKBiL4sKrgURUazoqoiCZQXEjl1ZFHtfLKgo66IuNlTehAR03Ve+d75v7v1z5sx/yp3JvQcAzQ9ciSQP1QIgX1wgjQ8LYqSmpTNIzwAKKEALOANbLk8mYcXGRgEog/e/y7sbAFHcrzopuP45/19Fhy+Q8QBAxkGcyZfx8iE+DgC+jieRFgBAVOgtpxRIFHgOxLpSGCDE5QqcrcQ7FDhTiQ8P2CTGsyG+DIAalcuVZgOgcQ/qGYW8bMij8RliFzFfJAZAcwTE/jwhlw+xIvYR+fmTFLgSYjtoL4EYxgOYmd9xZv+NP3OIn8vNHsLKvAZELVgkk+Rxp/2fpfnfkp8nH/RhAwdVKA2PV+QPa3grd1KkAlMh7hZnRscoag3xBxFfWXcAUIpQHp6ktEeNeTI2rB/Qh9iFzw2OhNgY4lBxXnSUSp+ZJQrlQAx3CzpVVMBJhNgA4kUCWUiCymaTdFK8yhfakCVls1T6c1zpgF+Frwfy3CSWiv+NUMBR8WMaRcLEFIgpEFsVipKjIdaA2FmWmxCpshldJGRHD9pI5fGK+K0gjheIw4KU/FhhljQ0XmVfki8bzBfbJBRxolV4X4EwMVxZH+wUjzsQP8wFuywQs5IGeQSy1KjBXPiC4BBl7thzgTgpQcXzQVIQFK9ci1MkebEqe9xCkBem0FtA7C4rTFCtxZML4OZU8uNZkoLYRGWceFEONyJWGQ++HEQBNggGDCCHIxNMAjlA1Nbd2A1/KWdCARdIQTYQACeVZnBFysCMGF4TQBH4AyIBkA2tCxqYFYBCqP8ypFVenUDWwGzhwIpc8BTifBAJ8uBv+cAq8ZC3ZPAEakT/8M6FgwfjzYNDMf/v9YPabxoW1ESpNPJBjwzNQUtiCDGYGE4MJdrjRrg/7otHwWsgHK44E/cezOObPeEpoZ3wiHCd0EG4PVE0T/pDlGNAB+QPVdUi8/ta4DaQ0wMPwv0gO2TG9XEj4IS7Qz8sPAB69oBatipuRVUYP3D/LYPvnobKjuxCRsnDyIFkux9XajhoeAyxKGr9fX2UsWYO1Zs9NPOjf/Z31efDe+SPltgibD92FjuBnccOY42AgR3DmrBW7IgCD+2uJwO7a9Bb/EA8uZBH9A9/XJVPRSVlLrUuXS6flXMFgqkFioPHniSZJhVlCwsYLPh2EDA4Yp7zCIari6sbAIp3jfLv623cwDsE0W/9ppv/OwB+x/r7+w9900UcA2CvFzz+B7/p7JgAaKsDcO4gTy4tVOpwxYUA/yU04UkzBKbAEtjBfFyBJ/AFgSAERIAYkAjSwARYZSHc51IwBcwAc0ExKAXLwSqwFmwEW8AOsBvsA43gMDgBzoCL4DK4Du7C3dMJXoIe8A70IQhCQmgIHTFEzBBrxBFxRZiIPxKCRCHxSBqSgWQjYkSOzEDmI6VIGbIW2YzUIHuRg8gJ5DzSjtxGHiJdyBvkE4qhVFQXNUFt0JEoE2WhkWgiOh7NRiejRegCdClaiVaju9AG9AR6Eb2OdqAv0V4MYOqYPmaOOWFMjI3FYOlYFibFZmElWAVWjdVhzfA5X8U6sG7sI07E6TgDd4I7OBxPwnn4ZHwWvgRfi+/AG/BT+FX8Id6DfyXQCMYER4IPgUNIJWQTphCKCRWEbYQDhNPwLHUS3hGJRH2iLdELnsU0Yg5xOnEJcT2xnnic2E58TOwlkUiGJEeSHymGxCUVkIpJa0i7SMdIV0idpA9q6mpmaq5qoWrpamK1eWoVajvVjqpdUXum1kfWIluTfcgxZD55GnkZeSu5mXyJ3Enuo2hTbCl+lERKDmUupZJSRzlNuUd5q66ubqHurR6nLlKfo16pvkf9nPpD9Y9UHaoDlU0dR5VTl1K3U49Tb1Pf0mg0G1ogLZ1WQFtKq6GdpD2gfdCgazhrcDT4GrM1qjQaNK5ovNIka1prsjQnaBZpVmju17yk2a1F1rLRYmtxtWZpVWkd1Lqp1atN1x6lHaOdr71Ee6f2ee3nOiQdG50QHb7OAp0tOid1HtMxuiWdTefR59O30k/TO3WJura6HN0c3VLd3bptuj16Onruesl6U/Wq9I7odehj+jb6HP08/WX6+/Rv6H8aZjKMNUwwbPGwumFXhr03GG4QaCAwKDGoN7hu8MmQYRhimGu4wrDR8L4RbuRgFGc0xWiD0Wmj7uG6w32H84aXDN83/I4xauxgHG883XiLcatxr4mpSZiJxGSNyUmTblN900DTHNNy06OmXWZ0M38zkVm52TGzFww9BouRx6hknGL0mBubh5vLzTebt5n3WdhaJFnMs6i3uG9JsWRaZlmWW7ZY9liZWY2xmmFVa3XHmmzNtBZar7Y+a/3extYmxWahTaPNc1sDW45tkW2t7T07ml2A3WS7artr9kR7pn2u/Xr7yw6og4eD0KHK4ZIj6ujpKHJc79g+gjDCe4R4RPWIm05UJ5ZToVOt00Nnfeco53nOjc6vRlqNTB+5YuTZkV9dPFzyXLa63B2lMypi1LxRzaPeuDq48lyrXK+50dxC3Wa7Nbm9dnd0F7hvcL/lQfcY47HQo8Xji6eXp9SzzrPLy8orw2ud102mLjOWuYR5zpvgHeQ92/uw90cfT58Cn30+f/o6+eb67vR9Ptp2tGD01tGP/Sz8uH6b/Tr8Gf4Z/pv8OwLMA7gB1QGPAi0D+YHbAp+x7Fk5rF2sV0EuQdKgA0Hv2T7smezjwVhwWHBJcFuITkhSyNqQB6EWodmhtaE9YR5h08OOhxPCI8NXhN/kmHB4nBpOT4RXxMyIU5HUyITItZGPohyipFHNY9AxEWNWjrkXbR0tjm6MATGcmJUx92NtYyfHHoojxsXGVcU9jR8VPyP+bAI9YWLCzoR3iUGJyxLvJtklyZNakjWTxyXXJL9PCU4pS+lIHZk6M/VimlGaKK0pnZSenL4tvXdsyNhVYzvHeYwrHndjvO34qePPTzCakDfhyETNidyJ+zMIGSkZOzM+c2O41dzeTE7musweHpu3mveSH8gv53cJ/ARlgmdZflllWc+z/bJXZncJA4QVwm4RW7RW9DonPGdjzvvcmNztuf15KXn1+Wr5GfkHxTriXPGpSaaTpk5qlzhKiiUdk30mr5rcI42UbpMhsvGypgJd+FHfKreT/yR/WOhfWFX4YUrylP1TtaeKp7ZOc5i2eNqzotCiX6bj03nTW2aYz5g74+FM1szNs5BZmbNaZlvOXjC7c07YnB1zKXNz5/42z2Ve2by/5qfMb15gsmDOgsc/hf1UW6xRLC2+udB34cZF+CLRorbFbovXLP5awi+5UOpSWlH6eQlvyYWfR/1c+XP/0qylbcs8l21YTlwuXn5jRcCKHWXaZUVlj1eOWdlQzigvKf9r1cRV5yvcKzaupqyWr+6ojKpsWmO1Zvmaz2uFa69XBVXVrzNet3jd+/X89Vc2BG6o22iysXTjp02iTbc2h21uqLaprthC3FK45enW5K1nf2H+UrPNaFvpti/bxds7dsTvOFXjVVOz03jnslq0Vl7btWvcrsu7g3c31TnVba7Xry/dA/bI97zYm7H3xr7IfS37mfvrfrX+dd0B+oGSBqRhWkNPo7Cxoymtqf1gxMGWZt/mA4ecD20/bH646ojekWVHKUcXHO0/VnSs97jkePeJ7BOPWya23D2ZevLaqbhTbacjT587E3rm5FnW2WPn/M4dPu9z/uAF5oXGi54XG1o9Wg/85vHbgTbPtoZLXpeaLntfbm4f3X70SsCVE1eDr565xrl28Xr09fYbSTdu3Rx3s+MW/9bz23m3X98pvNN3d849wr2S+1r3Kx4YP6j+3f73+g7PjiMPgx+2Pkp4dPcx7/HLJ7InnzsXPKU9rXhm9qzmuevzw12hXZdfjH3R+VLysq+7+A/tP9a9snv165+Bf7b2pPZ0vpa+7n+z5K3h2+1/uf/V0hvb++Bd/ru+9yUfDD/s+Mj8ePZTyqdnfVM+kz5XfrH/0vw18uu9/vz+fglXyh34FMDgQLOyAHizHQBaGgB02LdRxip7wQFBlP3rAAL/CSv7xQHxBKAOfr/HdcOvm5sA7NkK2y/Irwl71VgaAIneAHVzGxoqkWW5uSq5qLBPITzo738LezbSSgC+LO/v76vu7/+yBQYLe8fjYmUPqhAi7Bk2cb5k5meCfyPK/vS7HH+8A0UE7uDH+78A7Y+Q3LEYyPYAAAA4ZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAKgAgAEAAAAAQAAAICgAwAEAAAAAQAAAIAAAAAAa0YmTQAAC69JREFUeAHtnXnsHVUVxxG6CLQggqJUWisKLVRksQi2kiAULYGoaAmuTRQKgsYgVo0kWBSqLPKH4vKHGhMVBKlrwKXFAtKKlUVpBQRtSVtahSpLCxZZ9PO1v2keN2fem/fevLnz7pyTfDMzZ+5yzveeuXPn3vt+vx12aK6cjevrRnBWc2lopudn4PZ/A8xrJhXN8/pIXN4aNL6C4T9gJnBJmIG98U3dfvj0Z9cbubdPwv432rXReH8TyBo777icNGMazVSizl9RoPGzoPhKohw01q25OY2vLl/IGr71qDwuCTBwCD48AVobV+ca9B0NjgJPgfD+v9FNBy5DzMCe2L4ahI2ra80DZPIRTqw0a9G/JEvkx+FiYCfM/RWwGva7hivfykn7G/SjjPSuqjkDl2Of1fh3ot/FsP2F6Fbk5PmSkd5VNWbg3TkNuQn95DZ278u9h3Lyzm2Tz2/ViIGDsWULCJ/+Z9AdX8DOY0jztJH/SXSHFcjvSSIysAd1/xWEja/rc7qw6+M5ZTyAfq8uyvGkFTKwI3VdD6zGv7IHO76TU9Zi9BpgutSMgS9gj9X4f0K/aw+27kye23PKXNhDeZ5lgAy8nbKfA2EA/Avdfn3UO4m8Dxvlqq5T+ijXs5bIwBTKegyEjf8sutkl1HMcZWgAGZa/Gd20Esr3IvpgYDx57wZh4+j6032UG2ZVWVYd96F/UZjYr6thQIO+nwOrYX6M/gUlmqGyrs6p65fofVBYItlFi7ogp0HuQb9b0UK6SDeOtCuBFXALuijHk5bAwEmUoXd82BiPo5taQvl5RbyGG4+AsF4NCt+Zl8n15TKwP8U9CqxGOLncqszSNJtoDQoVfAeaOVxZGgPqhleBsPF1fX5ptXQu6LM5NtyLfvfO2T1FLwxoIHYNsBr/Z+g1KKxKZMu1wLLlJ+h136VkBs6jPIvwv6CP8dTpE/TPOTZ9Br1LiQzMoizrvavJmINKrKfbog4ggzUe0QD1hG4L8/Q2A69EnTcdO8fOUqn2bdSWNw396kotSbCydgsyF9bI34uwxXo93YW+l4WoGrkW15Srcoj9Nfo6zb5pAHpdjq2L0PugEBK6lU+QwXqq1qCv46YMbUa5P8fmc9G7dMHATNJa27K2oNeWr7pK3nY0+XJ0XY2um11aXXsAWE//qXUz1rBHs5HWoHA9+jr2XIYLcVV5kz2XxTWrq9ovJbUVwD/oqpQGJta3s0XcTehHDREfsvW3Ob6cOER+VGrqGGrTXHoYANrWNalSS8qpbDLFaIEo9Gc1urHlVJFWKdq2HZKl62Heezcvx6ePptV0/XujJ0KDpDAAlvRfdNQS9P2/2PDrQXTeC7Q0zWkGSZr7jznP32JeX6dHGL4p0D/UV6mJZf6jQdJVCflozRLekZB/fbmiyZOw69d39CF9lVqvzNMNH+VzSj72zPglBjm39FxafTPeZvh5cX3Nrc4y69PvzOqqr6ym+dQU9nTawdxo0e/xQ1I0+NszQVYm4pM1RSx9NKlyH53l5LGG8nZ0/zT0w65aiwN/MJw43NBVpoodAJbzN1TmffUV/d6o8jBDV5kqdgBY3/nWU1IZIQOuSL1bKNZDEKZJ9nojnoVjgAOS9Xbbr4lDfzUr2EjRilk4KNIAUPpUZTSOhT7rD1ZGk5ivAI30w71yWvlTEKQq2hn0ROCcgmLXQFfZZcwA0B66UFIc/Yc+6o9ZhBLjhy3/tyFmAFhdfdTuMGyVAV1bAaBtcFEkZgBYXb0VFFGIGWCl1nb2aO0QrWII1vswFP251tTlxYaDTxq65FV674WfROEAKTUSNOhV4Id+a0DcSFGDh2REex9W0AJ6+kN/9X8Jwq+hCkzZVkXMV4AssCZBUp8ICht3HQoFRRSJHQCrDK8PNXSpqN5gOLLS0FWmih0A1rYo7aFLVSzfogZAbKJnY0D4TtRrIdo7cYCEyKf1hr+zBlhn7YvWFKgGQWEQpLhX7k2Gn/pnVdGmgam70j+spPpC0VfAzaGS6/cYumFXvc9w4EZ0qX/6Gm4/X3U2l2EP8A90WiRJRcbiiBa6Qj/PSMXBfvzQt7H1GnhvP4XWLK/+uGTY+FvRNXYCKGyfKw2C7kFnzZuHeYfhWsEcBoB8dhlhYAbHkCBdvz8RhvSkP9Tio55+/SDGpYWBJZyHQbARXSpTw6/ClyvAN4E1H4C62WJ9JikgvtFsWprl/Q9xN+wFtIfu5GbR0FxvJ+C6dsyEQfAIuv2aS0uzPD/LCAAFxH3gpc2iopneas58EQh7AV3rF7a7gbrKLhj2baDNrbLVB3uQ0Ito5P83YAWBfl1T155gYWDzBq7HAJceGJhKnk3ACoL70R/UQ5mDzrLUsHf/QVeacvlH4pz+PKwVBJvRWwssMfm4OLD171x7D9Bni2i9PC8IFBg/Avv0WUdZ2cdR0PeAgvMuoBlOlxIYOIoyrNW0rGcQ4eeBqGvrJfjpRbRhQJtF7wZZo1vHh7l/PngZKFs0n/9h8GXwjrIL9/KKMTCeZFcDq/FbdU+T5qdAi0lquF5Fn5ynANWpBZzWOs7heuhlWPfenQrzWlgp0rjPkm4VWA5WAn1BbAD6Vs9+i6ifpO0BXg40ap8GNAA9FORtTNFy9YHAJRIDe1Hv18AzoPXJrOp8RSS/vdqAAc0HfB+o26+q8bWP73jgUiMGtN5+CdC396ACQdu6LwKTgUtNGdA7ezb4OlgL+g0G/WfSr4K3gFS2qOHKNhnWQWBmf5HjRBJpHkG/NdCTq55Cn4matNFXhQJEE01acn4UaJB47wg0cFQQuTgDzoAzkCAD/b4CXg8npwHt7c8TdbF6j14O1MW6dGZAcxKaaNLsZ7s20vS4NpneBiqX11HjU6DoIEtGJjeIGgDrmpTSnoeivKoNXjsAOzoWubALIzNnDu5YqifQg5XxVfSotuhJduwp17ZM6qa6ETmjLsulPQPiSFx1I922xfay+wmA7YUUOJFDmkDRRIpLewbWcTvrXdunjHxXEy2duii99+eAKZFtHcbqxZm4E4edeFZb9CSD7gEOxyqtofvov/vm2USWDwJxODAZdADI8GOAoniGLlwKMXAEqcTZWwul7iNR2QGghRhLJqBcCuaDsuu06htWnT6TPwWWgUk5TuRxnJN8cGprDHAm1X0MtFuavYP7mkByeT4D+kS+FeS977XvYQHQKzVM0/MYgLJ6Fq2QhYacPlLaLI7anxfez64VIF8E+iVN00UcaBm73UMjLo8bIUocZzxmR7VF5TKPGjMDsuP0Fismcd5pBKtf/5zYkqdppyfhcN4voDJOV5BGK5qZaHyQ3cuO2YOXpankOJpaFo0Yo313nzdqHYtO37TtoltOLANvBk2RY3F0Ocga0DqKswuBOAxFenGufNcCtUU02Zuad+9Qu9752pBpOdqqu4E0b+xQ1jDfnoHxS0Grz9a5flTS6fNPnIv7oRFFsnqJTr2BCFEgvAtEjWzqL0PkwxxQpOG1S/lzYAxIVqbh2S+AFfmh7kHSXQAmgGGTV2CwGnMDCP2yrq8nnTa4NkY0qr0TWGSEOvUa14HTQZ27PdkmG2Vr0e3q+izWmKCRokmhuWANCBs971qDn1vAfDAFxJapGPBJsAxkA7M821v1a0j/ASAOGi8iQZ9EvwOtJBU5f4w8i8ECoDLa7U7idl8yjtwzgSa7rgEPgSI2tqZRr6eGHwWiS7vtRrGM09rBueAE0It9z5FvPVjTgtWcrwNbwONg68j5Zo6S8UCNu3PL+UTOJwfQe72XJ1YBoHf8ZeBGUCuZhDVLQDfbu1oj2s+77wVic6a2Vq85UU+YGr+xgxB8b7IsVgCoG1T359I8BjbrfaYVKJdmMnDrTvh9M9AExL5A1y7pM6AZR822as7CxRlwBpwBZ8AZcAacAWfAGXAGnAFnwBlwBpwBZ8AZcAacAWcgfQZ8P8Dwref3u5/A9wOk/1wX8tD3AxSiKd1Evh8g3bYt5JnvByhEU3qJtu8H+B+tAu72zo+AigAAAABJRU5ErkJggg==",
                     name: "Anti Tarnish Waterproof"
                 },
-            ],
-            products: [
-                { id: 1, name: "Lorem ipsum dolor sit amet.", mrp: 100, reviews: "118", tag: "-15% Off", price: 80, image: "https://whitehathi.com/cdn/shop/files/IMG_9856.jpg?v=1706217863&width=360", secondary: "https://whitehathi.com/cdn/shop/files/92.5SterlingSilver18KGoldVermeil1YearAntiTarnishWarrantyPerfectforeverydaywear.png?v=1706217863&width=360", isHovered: false },
-                { id: 2, name: "Lorem ipsum dolor sit amet.", mrp: null, reviews: "22", tag: "", price: 299, image: "https://whitehathi.com/cdn/shop/products/DAJ06769...1.jpg?v=1687943574&width=360", secondary: "https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360", isHovered: false },
-                { id: 3, name: "Lorem ipsum dolor sit amet.", mrp: 390, reviews: "2", tag: "New-in", price: 340, image: "https://whitehathi.com/cdn/shop/files/IMG_3090.jpg?v=1713335959&width=360", secondary: "https://whitehathi.com/cdn/shop/files/IMG_4188.jpg?v=1713335959&width=360", isHovered: false },
-                { id: 4, name: "Lorem ipsum dolor sit amet.", mrp: 300, reviews: "", tag: "-15% Off", price: 265, image: "https://whitehathi.com/cdn/shop/files/0N8A0918.jpg?v=1702791455&width=360", secondary: "https://whitehathi.com/cdn/shop/files/0N8A0917.jpg?v=1702791429&width=360", isHovered: false },
-            ],
+            ]
         }
     },
     methods: {
-        selectLetter(letter) {
-            this.selectedLetter = letter; // Update the selected letter
-            console.log(letter)
-        },
-        selectCharm(charm) {
-            this.selectedCharm = charm; // Update the selected charm
-        },
         setMainImage(image) {
-            this.mainImage = image;
-        },
-        selectSize(weight) {
-            this.selectedSize = weight;
-        },
-        incrementQuantity() {
-            this.quantity++;
-        },
-        decrementQuantity() {
-            if (this.quantity > 1) this.quantity--;
+            this.triggerTransition(() => {
+                this.mainImage = image;
+            });
         },
         openGallery() {
             if (!this.lightGalleryInstance) {
@@ -460,20 +365,41 @@ export default {
                 this.lightGalleryInstance = null;
             }
         },
+        prevImage() {
+            const currentIndex = this.thumbnails.indexOf(this.mainImage);
+            const prevIndex = (currentIndex - 1 + this.thumbnails.length) % this.thumbnails.length;
+            this.triggerTransition(() => {
+                this.mainImage = this.thumbnails[prevIndex];
+            });
+        },
+        nextImage() {
+            const currentIndex = this.thumbnails.indexOf(this.mainImage);
+            const nextIndex = (currentIndex + 1) % this.thumbnails.length;
+            this.triggerTransition(() => {
+                this.mainImage = this.thumbnails[nextIndex];
+            });
+        },
+        triggerTransition(callback) {
+            this.transitioning = true;
+            setTimeout(() => {
+                callback();
+                setTimeout(() => {
+                    this.transitioning = false;
+                }, 300); // Duration matches the CSS transition time
+            }, 10);
+        },
     },
     beforeUnmount() {
         // Clean up LightGallery instance before the component is unmounted
         this.destroyLightGallery();
     },
-    mounted() {
-        this.selectedColor = this.colors[0]
-    }
 }
 </script>
 
 <style scoped>
-
-
+.star {
+    color: gold;
+}
 
 .accordion-button:not(.collapsed) {
     color: black !important;
@@ -487,18 +413,49 @@ export default {
     box-shadow: none !important;
 }
 
-input[type="radio"].d-none {
-    display: none;
+.lightgallery img {
+    cursor: pointer;
 }
 
-@media (min-width: 768px) {
+/* Smooth transition for main image */
+.transition-image {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
 
-    /* Only apply sticky positioning on desktop view */
-    .sticky-image {
-        position: sticky !important;
-        top: 10%;
-        /* Adjust top value as per your layout */
-    }
+.transition-image.fade-in {
+    opacity: 0;
+}
+
+/* Arrow Button Styles */
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.left-arrow {
+    left: 5px;
+}
+
+.right-arrow {
+    right: 5px;
+}
+
+.arrow-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Add any additional custom styles here */

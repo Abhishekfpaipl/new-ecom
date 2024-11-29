@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid py-5" style="background-color: #FDF6F0;">
+    <div class="container-fluid py-5" style="background-color: var(--primary-color);">
         <div class="container">
             <h2 class=" mb-4">
                 A GIFT THAT MAKES YOU UNFORGETTABLE

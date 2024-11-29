@@ -1,6 +1,6 @@
-// TestimonialCarousel.vue
+
 <template>
-    <div class="testimonial-section py-5">
+    <div class=" py-5" style="background-color: var(--primary-color);">
         <div class="container">
             <h2 class="text-center mb-5">LOVED BY CELEBRITIES</h2>
 
@@ -73,10 +73,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.testimonial-section {
-    background-color: #fff5f2;
-}
+<style scoped> 
 
 .testimonial-img {
     width: 200px;

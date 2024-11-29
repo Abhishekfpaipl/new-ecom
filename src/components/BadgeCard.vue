@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" style="background-color: #FDF6F0;">
+    <div class="container-fluid" style="background-color: var(--primary-color);">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 py-5">
             <div class="col" v-for="(category, index) in categories" :key="index">
                 <div class="card bg-transparent border-0 mb-3">

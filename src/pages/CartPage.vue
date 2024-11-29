@@ -18,7 +18,7 @@
             </div>
 
             <!-- Cart Items -->
-            <div class="card mb-4">
+            <div class="card mb-4 rounded-0">
                 <div class="card-body">
                     <div class="row d-none d-md-flex mb-3">
                         <div class="col-6">Product</div>
@@ -80,7 +80,7 @@
             </div>
 
             <!-- Cart Summary -->
-            <div class="card">
+            <div class="card rounded-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal</span>

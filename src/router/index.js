@@ -12,9 +12,19 @@ const routes = [
     component: () => import("@/pages/ProductPage.vue")
   },
   {
+    path: "/collection-page",
+    name: "CollectionPage",
+    component: () => import("@/pages/CollectionPage.vue")
+  },
+  {
     path: '/cart-page',
     name: 'CartPage',
     component: () => import('@/pages/CartPage.vue')
+  },
+  {
+    path: '/wishlist-page',
+    name: 'WishlistPage',
+    component: () => import('@/pages/WishlistPage.vue')
   },
   // {
   //   path: '/address-page',

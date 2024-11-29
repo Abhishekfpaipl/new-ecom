@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid py-5 " style="background-color: #FDF6F0;">
+    <div class="container-fluid py-5 " style="background-color: var(--primary-color);">
         <div class="text-center mb-5">
             <h6 class="text-uppercase text-secondary mb-2">SHOP BY</h6>
             <h2 class="mb-4">COLLECTION</h2>

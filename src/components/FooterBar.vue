@@ -1,48 +1,110 @@
 <template>
-    <footer class="bg-light py-5">
+    <footer class="footer pb-0" style="background-color: var(--primary-color);">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 mb-4">
-                    <router-link to="/">
-                        <img src="/img/logo.png" alt="Logo" style="width:150px; height: 150px;object-fit: contain;">
-                    </router-link>
-                    <p class="text-uppercase fw-bold">E.com</p>
-                </div>
-
-                <!-- Contact Us -->
-                <div class="col-md-6 mb-4">
-                    <h5 class="text-uppercase mb-3">Contact Us</h5>
-                    <p class="text-muted">r k puram sector 5 , new delhi , 110022</p>
-                    <p class="text-muted">Call Us: <strong>(011) 23456789</strong><br>Mon-Fri: 9:00am - 5:00pm</p>
-                    <p class="text-muted">Email Us: test@gmail.com</p>
-                    <p class="text-muted">WhatsApp Us: +91 1234567890</p>
-                    <a href="#" class="text-muted">Report Product Related Issues</a>
+                <div v-for="(section, index) in footerSections" :key="index" class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3 text-start">{{ section.title }}</h5>
+                    <p class="text-start" v-if="section.description">{{ section.description }}</p>
+                    <p class="text-start" v-if="section.contactInfo">
+                        <strong>Email:</strong> <a :href="'mailto:' + section.contactInfo.email">{{
+                            section.contactInfo.email }}</a><br>
+                        <strong>{{ section.contactInfo.hoursLabel }}:</strong> {{ section.contactInfo.hours }}
+                    </p>
+                    <ul v-if="section.links" class="list-unstyled">
+                        <li v-for="(link, index) in section.links" :key="index" class="text-start">
+                            <a :href="link.url">{{ link.text }}</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            <hr class="my-4">
-
-            <div class="text-center text-muted">
-                <p>&copy; 2024 E Com . All Rights Reserved.</p>
-                <p class="small">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad sint omnis voluptatibus
-                    hic velit quod voluptatum ab illo aperiam amet.</p>
+        </div>
+        <div class="bg-white py-3">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <div class="wh-60 p-1 px-2 rounded-circle bg-dark text-white">
+                    <i class="bi bi-facebook"></i>
+                </div>
+                <div class="wh-60 p-1 px-2 rounded-circle bg-dark text-white">
+                    <i class="bi bi-instagram"></i>
+                </div>
+                <div class="wh-60 p-1 px-2 rounded-circle bg-dark text-white">
+                    <i class="bi bi-youtube"></i>
+                </div>
             </div>
+            <p class="text-center text-uppercase mb-2">© Copyright Covisor Infotech Pvt Ltd. 2024.</p>
+            <p class="text-center text-uppercase mb-2">All rights reserved</p>
         </div>
     </footer>
 </template>
 
 <script>
 export default {
-    name: 'FooterBar',
+    name: 'TheFooter',
     data() {
         return {
-            quickLinks: ['Ask the Experts', 'Blog', 'Careers', 'Contact Us', 'FAQs', 'Health Help', 'Herb Finder', 'Loyalty Program', 'Research Papers', 'Store Locator', 'Refund policy', 'Terms of Service'],
-            policies: ['Shipping', 'Returns & Cancellation', 'Terms of Use', 'Privacy Policy']
-        }
+            footerSections: [
+                {
+                    title: 'NEED HELP? WE\'RE ALWAYS THERE',
+                    description: 'Everyone who shops from us is one of us, we will never ghost you. Reach out to us & we promise to help you out in the best way possible.',
+                    contactInfo: {
+                        email: 'help@test.com',
+                        hoursLabel: 'Mon - Sat',
+                        hours: '10 AM - 7 PM'
+                    }
+                },
+                {
+                    title: 'ABOUT US',
+                    description: 'Each of your pieces are handcrafted by more than 200 karigars working tirelessly for you. We started this brand in 2020 with an aim of providing jobs to more than 1000 Karigars who lost their livelihood in Covid.'
+                },
+                {
+                    title: 'CARE',
+                    links: [
+                        { text: 'RETURNS AND REFUNDS', url: '#' },
+                        { text: 'SHIPPING POLICY', url: '#' },
+                        { text: 'JEWELLERY CARE', url: '#' },
+                        { text: 'WARRANTY', url: '#' },
+                        { text: 'CONTACT US', url: '#' },
+                        { text: 'TERMS & CONDITIONS', url: '#' }
+                    ]
+                },
+                {
+                    title: 'SHOP',
+                    links: [
+                        { text: 'JUST LAUNCHED', url: '#' },
+                        { text: 'ALL PERSONALIZED', url: '#' },
+                        { text: 'BESTSELLERS', url: '#' },
+                        { text: 'BRACELETS', url: '#' },
+                        { text: 'RINGS', url: '#' },
+                        { text: 'NECKLACES', url: '#' }
+                    ]
+                }
+            ]
+        };
     }
 }
 </script>
 
 <style scoped>
-/* Add any custom styles here if needed */
+.footer {
+    padding: 40px 0;
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #343a40;
+}
+
+@media (max-width: 767.98px) {
+    .footer .col-md-6 {
+        margin-bottom: 30px;
+    }
+}
 </style>

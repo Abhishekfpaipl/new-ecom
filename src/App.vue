@@ -3,16 +3,19 @@
   <transition name="fade">
     <router-view />
   </transition>
+  <ScrollUpArrow />
   <FooterBar />
 </template>
 <script>
 import TopNav from "@/components/TopNav.vue"
 import FooterBar from "@/components/FooterBar.vue"
+import ScrollUpArrow from "@/components/ScrollUpArrow.vue"
 export default {
   name: 'App',
   components: {
     TopNav,
     FooterBar,
+    ScrollUpArrow,
   },
 }
 </script>
@@ -24,13 +27,30 @@ body {
   -ms-user-select: none;
   -webkit-touch-callout: none; //ios safari
 }
-
+:root{
+  --primary-color:#F6D374 !important;
+}
 #app {
   font-family: libre franklin, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.top-padding {
+  padding-top: 145px;
+}
+
+@media (max-width: 768px) {
+
+  .top-padding {
+    padding-top: 60px;
+  }
+}
+
+.ls-1 {
+  letter-spacing: 0.1rem;
 }
 
 .fade-enter-active,
@@ -73,6 +93,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .text-ellipsis2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
