@@ -11,11 +11,12 @@
                         <div class="row justify-content-center">
                             <div class="col-md-8 text-center">
                                 <img :src="testimonial.image" :alt="testimonial.name" class="testimonial-img mb-4">
+                                <p class="mb-3 text-white">{{ testimonial.quote }}</p>
+                                <cite class="text-white">{{testimonial.name}}</cite>
                                 <blockquote class="blockquote">
-                                    <p class="mb-3">{{ testimonial.quote }}</p>
-                                    <footer class="blockquote-footer">
+                                    <!-- <footer class="blockquote-footer">
                                         <cite title="Source Title">{{ testimonial.name }}</cite>
-                                    </footer>
+                                    </footer> -->
                                 </blockquote>
                             </div>
                         </div>

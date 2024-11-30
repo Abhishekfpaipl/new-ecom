@@ -39,7 +39,7 @@ export default {
 <style>
 .scroll-up-button {
     position: fixed;
-    bottom: 20px;
+    bottom: 60px;
     right: 20px;
     z-index: 1000;
     display: flex;

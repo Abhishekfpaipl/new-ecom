@@ -1,20 +1,21 @@
 <template>
     <div class="top-padding">
-        <div class="container mt-4">
-            <h1 class="text-center mb-5 text-uppercase">Category Page</h1>
-            <div class="d-flex gap-3 justify-content-md-center justify-content-start overflow-x-scroll" id="scroll">
-                <button class="btn btn-outline-dark rounded-0 ls-1 text-uppercase" v-for="category in categories"
-                    :key="category">{{ category
-                    }}</button>
+        <div class="d-flex justify-content-between align-items-center shadow p-2 mb-3">
+            <div class="flex-fill d-flex align-items-center p-2">
+                <i class="bi bi-search"></i>
+                <input type="search" placeholder="Search for products" v-model="searchTerm"
+                    class="form-control border-0" ref="searchInput" />
+            </div>
+
+            <div class="">
+                <i class="btn bi bi-filter fs-3" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas"
+                    aria-controls="filterOffcanvas"></i>
+                <i class="btn bi bi-arrow-down-up fs-5"></i>
             </div>
         </div>
-        <div class="d-flex justify-content-center gap-2 align-items-center my-5">
-            <button class="btn btn-outline-dark rounded-0" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#filterOffcanvas" aria-controls="filterOffcanvas">Filter</button>
-            <button class="btn btn-outline-dark rounded-0">Featured</button>
-        </div>
-        <!-- Filters -->
 
+
+        <!-- Filters -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas"
             aria-labelledby="filterOffcanvasLabel">
             <div class="offcanvas-header">
@@ -23,7 +24,6 @@
             </div>
             <div class="offcanvas-body">
                 <div class="accordion" id="filtersAccordion">
-                    <!-- Type Filter -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="typeHeading">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -35,9 +35,9 @@
                             data-bs-parent="#filtersAccordion">
                             <div class="accordion-body">
                                 <div class="form-check text-start" v-for="(filter, index) in typeFilters" :key="index">
-                                    <input class="form-check-input" type="checkbox" :id="index" :value="index"
+                                    <input class="form-check-input" type="checkbox" :id="index" :value="filter"
                                         v-model="selectedTypes" />
-                                    <label class="form-check-label" :for="type">
+                                    <label class="form-check-label" :for="'type-' + index">
                                         {{ filter }}
                                     </label>
                                 </div>
@@ -45,37 +45,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Occasion Filter -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="occasionHeading">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#occasionCollapse" aria-expanded="false"
-                                aria-controls="occasionCollapse">
-                                Occasion
-                            </button>
-                        </h2>
-                        <div id="occasionCollapse" class="accordion-collapse collapse" aria-labelledby="occasionHeading"
-                            data-bs-parent="#filtersAccordion">
-                            <div class="accordion-body">
-                                <div class="form-check" v-for="(count, occasion) in occasionFilters" :key="occasion">
-                                    <input class="form-check-input" type="checkbox" :id="occasion"
-                                        v-model="selectedOccasions">
-                                    <label class="form-check-label" :for="occasion">
-                                        {{ occasion }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
 
 
         <!-- Main Content -->
-        <div class="container my-5">
+        <div class="container-fluid my-5">
             <div class="row">
                 <!-- Products -->
                 <div class="col-12">
@@ -84,15 +60,20 @@
                             v-for="product in filteredProducts" :key="product.id">
                             <div class="card rounded-0 border-0">
                                 <div class="image-wrapper position-relative overflow-hidden">
-                                    <img :src="product.isHovered ? product.secondary : product.image"
+                                    <img :src="product.isHovered ? product.images[1] : product.image"
                                         class="img-fluid p-0" @mouseover="product.isHovered = true"
                                         @mouseleave="product.isHovered = false" alt="Product Image" />
-                                    <span class="badge bg-white text-dark position-absolute p-2 rounded-pill"
-                                        style="top: 3%; left: 3%;">
-                                        {{ product.tag }}
-                                    </span>
+                                    <div class="position-absolute d-flex justify-content-between w-100 px-2"
+                                        style="top: 3%;">
+                                        <span class="badge bg-white text-dark p-2 rounded-pill">{{ product.tag }}</span>
+                                        <div class="wh-60 bg-light rounded-circle p-1 px-2"
+                                            @click="addToWishlist(product.sid)">
+                                            <i
+                                                :class="product.wishlistStatus ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
+                                        </div>
+                                    </div> 
                                 </div>
-                                <div class="card-body text-start">
+                                <div class="card-body text-start ls-1 px-0">
                                     <p class="small mb-0 text-uppercase text-ellipsis2">
                                         {{ product.name }}
                                     </p>
@@ -102,13 +83,12 @@
                                     </div>
                                     <p class="card-text">
                                         ₹ {{ product.price }}
-                                        <span v-if="product.mrp" class="text-decoration-line-through text-muted">₹ {{
+                                        <span v-if="product.mrp" class="text-decoration-line-through text-danger">₹ {{
                                             product.mrp }}</span>
                                     </p>
                                 </div>
                             </div>
                         </router-link>
-
                     </div>
                 </div>
             </div>
@@ -117,88 +97,58 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
             categories: ['Necklace', 'Bracelets', 'Rings', 'Anklets', 'Earrings', 'Combo Set', 'Personalized Jewellery'],
-            products: [
-                {
-                    id: 1,
-                    name: "Lorem ipsum dolor sit amet.",
-                    mrp: 100,
-                    reviews: "118",
-                    tag: "-15% Off",
-                    price: 80,
-                    image: "https://whitehathi.com/cdn/shop/files/IMG_9856.jpg?v=1706217863&width=360",
-                    secondary: "https://whitehathi.com/cdn/shop/files/92.5SterlingSilver18KGoldVermeil1YearAntiTarnishWarrantyPerfectforeverydaywear.png?v=1706217863&width=360",
-                    isHovered: false,
-                    type: "Necklace",
-                },
-                {
-                    id: 2,
-                    name: "Lorem ipsum dolor sit amet.",
-                    mrp: null,
-                    reviews: "22",
-                    tag: "",
-                    price: 299,
-                    image: "https://whitehathi.com/cdn/shop/products/DAJ06769...1.jpg?v=1687943574&width=360",
-                    secondary: "https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360",
-                    isHovered: false,
-                    type: "Bracelets",
-                },
-                {
-                    id: 3,
-                    name: "Lorem ipsum dolor sit amet.",
-                    mrp: 390,
-                    reviews: "2",
-                    tag: "New-in",
-                    price: 340,
-                    image: "https://whitehathi.com/cdn/shop/files/IMG_3090.jpg?v=1713335959&width=360",
-                    secondary: "https://whitehathi.com/cdn/shop/files/IMG_4188.jpg?v=1713335959&width=360",
-                    isHovered: false,
-                    type: "Earrings",
-                },
-                {
-                    id: 4,
-                    name: "Lorem ipsum dolor sit amet.",
-                    mrp: 300,
-                    reviews: "",
-                    tag: "-15% Off",
-                    price: 265,
-                    image: "https://whitehathi.com/cdn/shop/files/0N8A0918.jpg?v=1702791455&width=360",
-                    secondary: "https://whitehathi.com/cdn/shop/files/0N8A0917.jpg?v=1702791429&width=360",
-                    isHovered: false,
-                    type: "Jewellery",
-                },
-            ], 
             typeFilters: [
                 "Bracelets",
-                "Jewelry",
+                "Jewellery",
                 "Necklace",
-                "Necklaces",
+                "Earrings",
                 "Pendant"
             ],
-            occasionFilters: ['Office Wear'],
             selectedTypes: [],
-            selectedOccasions: []
-
+            searchTerm: '',
         }
     },
     computed: {
+        products() {
+            return this.$store.getters.getProducts
+        },
         filteredProducts() {
-            if (this.selectedTypes.length === 0) {
-                return this.products; // Return all products if no type is selected
-            }
-            return this.products.filter(product =>
-                this.selectedTypes.includes(product.type)
+            const searchTerm = this.searchTerm.toLowerCase();
+
+            // Filter by type
+            let filteredByType = this.selectedTypes.length
+                ? this.products.filter(product =>
+                    this.selectedTypes.includes(product.type)
+                )
+                : this.products;
+
+            // Filter by search term
+            return filteredByType.filter(product =>
+                product.name.toLowerCase().includes(searchTerm)
             );
         }
     },
     methods: {
+        toggleTypeFilter(filter) {
+            const index = this.selectedTypes.indexOf(filter);
+            if (index === -1) {
+                // Add the filter if not already selected
+                this.selectedTypes.push(filter);
+            } else {
+                // Remove the filter if already selected
+                this.selectedTypes.splice(index, 1);
+            }
+        },
+        addToWishlist(productId) {
+            this.$store.dispatch('saveProduct', productId);
+        },
     }
+
 }
 </script>
-<style> 
-
-
-</style>
+<style></style>

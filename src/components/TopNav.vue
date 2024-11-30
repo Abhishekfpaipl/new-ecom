@@ -4,35 +4,45 @@
         <nav :class="['navbar navbar-expand-lg d-none d-lg-block position-fixed w-100 top-0 border-bottom-0', { 'scrolled': isScrolled }]"
             :style="{
                 background: isScrolled
-                    ? 'white'
+                    ? 'black'
                     : 'linear-gradient(180deg, #000000f2 22.19%, #0000)',
-                color: isScrolled ? 'black' : 'white',
+                color: isScrolled ? 'white' : 'white',
                 transition: 'background 0.3s, color 0.3s',
             }" style="z-index: 100;">
             <div class="container-fluid d-flex justify-content-between align-items-center px-5 text-white">
-                <div class="d-flex align-items-center gap-3" data-bs-toggle="offcanvas" data-bs-target="#desktopSearch"
+                <!-- <div class="d-flex align-items-center gap-3" data-bs-toggle="offcanvas" data-bs-target="#desktopSearch"
                     aria-controls="desktopSearch">
-                    <i class="bi bi-search fs-4" :style="{ color: isScrolled ? 'black' : 'white' }"></i>
-                    <span :style="{ color: isScrolled ? 'black' : 'white' }" class="fs-4">Search</span>
-                </div>
+                    <i class="bi bi-search fs-4"></i>
+                    <span class="fs-4">Search</span>
+                </div> -->
 
                 <!-- Logo -->
                 <router-link to="/" class="navbar-brand" href="#">
-                    <img src="/img/logoblack1.png" alt="White Hathi" height="60"
-                        :style="{ filter: isScrolled ? 'invert(1)' : 'invert(0)' }" />
+                    <img src="/img/logoblack1.png" alt="White Hathi" height="60" />
+                    <span class="text-white">Chauhan</span>
                 </router-link>
 
                 <!-- Icons -->
                 <div class="d-flex align-items-center gap-3">
-                    <router-link to="/wishlist-page" class="text-decoration-none"
-                        :style="{ color: isScrolled ? 'black' : 'white' }">
-                        <i class="bi bi-heart fs-5"></i>
+                    <div class="d-flex align-items-center gap-3" data-bs-toggle="offcanvas"
+                        data-bs-target="#desktopSearch" aria-controls="desktopSearch">
+                        <i class="bi bi-search fs-5"></i>
+                        <!-- <span class="fs-4">Search</span> -->
+                    </div>
+                    <div class="position-relative">
+                        <router-link to="/wishlist-page" class="text-decoration-none text-white">
+                            <i class="bi bi-heart fs-5"></i><span class="badge count">{{ wishlists.length }}</span>
+                        </router-link>
+                    </div>
+
+                    <router-link to="/wishlist-page" class="text-decoration-none text-white">
+                        <i class="bi bi-person-circle fs-5"></i>
                     </router-link>
-                    <i class="bi bi-person fs-4" :style="{ color: isScrolled ? 'black' : 'white' }"></i>
-                    <router-link to="/cart-page" class="text-decoration-none"
-                        :style="{ color: isScrolled ? 'black' : 'white' }">
-                        <i class="bi bi-bag fs-5"></i>
-                    </router-link>
+                    <div class="position-relative">
+                        <router-link to="/cart-page" class="text-decoration-none text-white">
+                            <i class="bi bi-cart fs-5"></i><span class="badge count">{{ cartItems.length }}</span>
+                        </router-link>
+                    </div>
                 </div>
             </div>
 
@@ -41,7 +51,7 @@
                 <div class="container">
                     <ul class="nav justify-content-center">
                         <li class="nav-item dropdown shop-by-dropdown">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">SHOP BY</a>
+                            <a class="nav-link text-white" href="#">SHOP BY</a>
                             <!-- Shop By Dropdown -->
                             <div class="dropdown-menu">
                                 <div class="container">
@@ -66,38 +76,34 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }"
-                                href="#">BESTSELLERS</a>
+                            <a class="nav-link text-white" href="#">BESTSELLERS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">NEW IN</a>
+                            <a class="nav-link text-white" href="#">NEW IN</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">GIFTS</a>
+                            <a class="nav-link text-white" href="#">GIFTS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }"
-                                href="#">PERSONALIZED</a>
+                            <a class="nav-link text-white" href="#">PERSONALIZED</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }"
-                                href="#">NECKLACES</a>
+                            <a class="nav-link text-white" href="#">NECKLACES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">RINGS</a>
+                            <a class="nav-link text-white" href="#">RINGS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">EARRINGS</a>
+                            <a class="nav-link text-white" href="#">EARRINGS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }"
-                                href="#">BRACELETS</a>
+                            <a class="nav-link text-white" href="#">BRACELETS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">ANKLETS</a>
+                            <a class="nav-link text-white" href="#">ANKLETS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" :style="{ color: isScrolled ? 'black' : 'white' }" href="#">ABOUT</a>
+                            <a class="nav-link text-white" href="#">ABOUT</a>
                         </li>
                     </ul>
                 </div>
@@ -143,9 +149,9 @@
             style="z-index: 100; transition: background 0.3s, color 0.3s;">
             <div class="container">
                 <div class="d-flex align-items-center gap-2">
-                    <i class="bi bi-list fs-1 text-dark" data-bs-toggle="offcanvas" data-bs-target="#mobileSideMenu"
+                    <i class="bi bi-list fs-1 text-white" data-bs-toggle="offcanvas" data-bs-target="#mobileSideMenu"
                         aria-controls="mobileSideMenu"></i>
-                    <i class="bi bi-search text-dark fs-4"></i>
+                    <i class="bi bi-search text-white fs-4"></i>
                 </div>
                 <router-link to="/" class="navbar-brand">
                     <img src="/img/logoblack1.png" alt="White Hathi" height="50"
@@ -153,12 +159,16 @@
 
                 </router-link>
                 <div class="d-flex align-items-center gap-2">
-                    <router-link to="/wishlist-page" class="text-dark">
-                        <i class="bi bi-heart fs-5"></i>
-                    </router-link>
-                    <router-link to="/cart-page" class="text-dark">
-                        <i class="bi bi-cart fs-5"></i>
-                    </router-link>
+                    <div class="position-relative">
+                        <router-link to="/wishlist-page" class="text-decoration-none text-white">
+                            <i class="bi bi-heart fs-5"></i><span class="badge count">{{ wishlists.length }}</span>
+                        </router-link>
+                    </div>
+                    <div class="position-relative">
+                        <router-link to="/cart-page" class="text-decoration-none text-white">
+                            <i class="bi bi-cart fs-5"></i><span class="badge count">{{ cartItems.length }}</span>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -235,6 +245,14 @@ export default {
             isScrolled: false,
         }
     },
+    computed: {
+        wishlists() {
+            return this.$store.getters.getSavedProducts
+        },
+        cartItems() {
+            return this.$store.getters.getCart
+        },
+    },
     methods: {
         toggleMobileMenu() {
             this.isMobileMenuOpen = !this.isMobileMenuOpen
@@ -268,8 +286,8 @@ export default {
 
 /* Styles when scrolled */
 .navbar.scrolled {
-    background: white;
-    color: black !important;
+    background: black;
+    color: white !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     /* Optional shadow for visual distinction */
 }

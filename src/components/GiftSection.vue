@@ -7,12 +7,12 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-4 text-center">
                     <div class="card bg-transparent border-0">
-                        <img src="https://whitehathi.com/cdn/shop/files/Screenshot_2023-03-04_at_1.58_2.jpg?v=1678791571"
+                        <img src="/img/gift.jpg"
                             alt="White Haathi Gift Box" class="img-fluid"
                             style="max-width: 100%; height: auto;">
                         <p class="text-muted my-4 small" style="line-height: 1.8;">
                             Discover our edit of the ultimate can't-go-wrong gifts. If you want to make this years gift
-                            unforgettable, its got to be with a piece of jewellery from White Haathi.
+                            unforgettable, its got to be with a piece of jewellery from Chauhan Jewellers.
                         </p>
                         <button class="btn btn-outline-dark px-4 py-2 text-uppercase" style="letter-spacing: 1px;">
                             Explore Gifts

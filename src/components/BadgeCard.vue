@@ -1,11 +1,11 @@
 <template>
     <div class="container-fluid" style="background-color: var(--primary-color);">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 py-5">
+        <div class="row row-cols-3 g-4 py-5">
             <div class="col" v-for="(category, index) in categories" :key="index">
                 <div class="card bg-transparent border-0 mb-3">
                     <div class="card-body">
                         <img :src="category.image" :alt="category.title">
-                        <p class="small my-2">{{ category.title }}</p>
+                        <!-- <p class="small my-2">{{ category.title }}</p> -->
                     </div>
                 </div>
             </div>

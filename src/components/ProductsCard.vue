@@ -5,17 +5,17 @@
             <div class="col text-decoration-none text-dark" v-for="product in products" :key="product.id">
                 <div class="card rounded-0 border-0">
                     <div class="image-wrapper position-relative overflow-hidden">
-                        <img :src="product.isHovered ? product.secondary : product.image" class="img-fluid p-0"
+                        <img :src="product.isHovered ? product.images[1] : product.image" class="img-fluid p-0"
                             @mouseover="product.isHovered = true" @mouseleave="product.isHovered = false"
                             alt="Product Image">
                         <div class="position-absolute d-flex justify-content-between w-100 px-2" style="top: 3%;">
                             <span class="badge bg-white text-dark p-2 rounded-pill">{{ product.tag }}</span>
-                            <div class="wh-60 bg-light rounded-circle p-1 px-2" @click="addToWishlist(product)">
+                            <div class="wh-60 bg-light rounded-circle p-1 px-2" @click="addToWishlist(product.sid)">
                                 <i :class="product.wishlistStatus ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
                             </div>
                         </div>
                     </div>
-                    <router-link to="/product-detail" class="card-body text-start text-decoration-none">
+                    <router-link :to="'/product-page/' + product.sid" class="card-body text-start text-decoration-none">
                         <p class="small mb-0 text-uppercase text-ellipsis2">{{ product.name }}</p>
                         <div v-if="product.reviews" class="small">
                             <i class="bi bi-star-fill" v-for="star in 5" :key="star"></i>
@@ -50,13 +50,16 @@ export default {
         };
     },
     methods: {
-        addToWishlist(product) {
-            // Toggle the wishlist status of the product
-            product.wishlistStatus = !product.wishlistStatus;
+        // addToWishlist(product) {
+        //     // Toggle the wishlist status of the product
+        //     product.wishlistStatus = !product.wishlistStatus;
 
-            // Optionally log the status change
-            console.log(product.wishlistStatus ? 'Added to wishlist' : 'Removed from wishlist', product);
-        }
+        //     // Optionally log the status change
+        //     console.log(product.wishlistStatus ? 'Added to wishlist' : 'Removed from wishlist', product);
+        // },
+        addToWishlist(productId) {
+            this.$store.dispatch('saveProduct', productId); 
+        },
     }
 }
 </script>

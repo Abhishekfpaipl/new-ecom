@@ -7,7 +7,7 @@ const routes = [
     component: () => import("@/pages/HomeView.vue"),
   },
   {
-    path: "/product-page",
+    path: "/product-page/:productId",
     name: "product-page",
     component: () => import("@/pages/ProductPage.vue")
   },
@@ -25,6 +25,21 @@ const routes = [
     path: '/wishlist-page',
     name: 'WishlistPage',
     component: () => import('@/pages/WishlistPage.vue')
+  },
+  {
+    path: '/contact-us',
+    name: 'ContactPage',
+    component: () => import('@/pages/ContactPage.vue')
+  },
+  {
+    path: '/about-us',
+    name: 'AboutPage',
+    component: () => import('@/pages/AboutPage.vue')
+  },
+  {
+    path: '/gifts',
+    name: 'GiftPage',
+    component: () => import('@/pages/GiftPage.vue')
   },
   // {
   //   path: '/address-page',

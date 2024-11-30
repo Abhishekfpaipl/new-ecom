@@ -1,20 +1,14 @@
 <template>
-    <div class="">
+    <div class="top-padding" style="background-color: var(--primary-color);">
         <div class="container py-4">
             <h1 class="h3 mb-4">Shopping Cart</h1>
 
             <!-- Timer Alert -->
             <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
-                <svg class="bi flex-shrink-0 me-2 text-warning" width="24" height="24" role="img" aria-label="Warning:">
-                    <circle cx="12" cy="12" r="10" fill="#ffc107" />
-                    <path
-                        d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
-                    <path
-                        d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
-                </svg>
-                <div>
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span class="ms-2">
                     These products are limited, checkout within {{ formatTime(timeRemaining) }}
-                </div>
+                </span>
             </div>
 
             <!-- Cart Items -->
@@ -36,8 +30,11 @@
                                     <h6 class="mb-1">{{ item.name }}</h6>
                                     <div class="text-muted small">
                                         Size in "Inches": {{ item.size }}<br>
-                                        Polish: {{ item.polish }}<br>
-                                        Name Letter: {{ item.nameLetter }}
+                                        <span v-if="item.color">
+                                            Polish: {{ item.color.name }}<br>
+                                        </span>
+                                        <span>Name Letter: {{ item.letter }}</span> <br>
+                                        <span v-if="item.charm">ZODIAC SIGN: {{ item.charm.name }}</span>
                                     </div>
                                     <div class="d-flex justify-content-end mt-2 d-md-none">
                                         <button @click="removeItem(item.id)"
@@ -51,7 +48,7 @@
                         <div class="col-6 col-md-2">
                             <div class="d-md-none text-muted mb-1">Price:</div>
                             <p class="mb-0 text-center">
-                                ₹{{ item.price.toFixed(2) }}
+                                ₹{{ item.price }}
                             </p>
                         </div>
 
@@ -68,7 +65,7 @@
                         <!-- Total -->
                         <div class="card-footer col-12 col-md-2 mt-5 mt-md-0 text-md-start">
                             <div class="d-md-none text-muted mb-1">Total:</div>
-                            <p class="mb-0 text-center">₹{{ (item.price * item.quantity).toFixed(2) }}</p>
+                            <p class="mb-0 text-center">₹{{ item.price * item.quantity }}</p>
                         </div>
 
                         <!-- Remove Button (Desktop) -->
@@ -84,7 +81,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal</span>
-                        <span>₹{{ subtotal.toFixed(2) }}</span>
+                        <span>₹{{ subtotal }}</span>
                     </div>
                     <div class="text-muted small mb-3">Tax included. Shipping calculated at checkout.</div>
 
@@ -109,31 +106,34 @@ export default {
     data() {
         return {
             timeRemaining: 300, // 5 minutes in seconds
-            cartItems: [
-                {
-                    id: 1,
-                    name: 'IRIS INITIAL NECKLACE',
-                    image: 'https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360',
-                    size: '14-16',
-                    polish: 'Gold',
-                    nameLetter: 'Libra,A',
-                    price: 2849.00,
-                    quantity: 1
-                },
-                {
-                    id: 2,
-                    name: 'IRIS INITIAL NECKLACE',
-                    image: 'https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360',
-                    size: '14-16',
-                    polish: 'Gold',
-                    nameLetter: 'Libra,A',
-                    price: 2849.00,
-                    quantity: 1
-                },
-            ]
+            // cartItems: [
+            //     {
+            //         id: 1,
+            //         name: 'IRIS INITIAL NECKLACE',
+            //         image: 'https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360',
+            //         size: '14-16',
+            //         polish: 'Gold',
+            //         nameLetter: 'Libra,A',
+            //         price: 2849.00,
+            //         quantity: 1
+            //     },
+            //     {
+            //         id: 2,
+            //         name: 'IRIS INITIAL NECKLACE',
+            //         image: 'https://whitehathi.com/cdn/shop/files/IMG_9865.jpg?v=1687943574&width=360',
+            //         size: '14-16',
+            //         polish: 'Gold',
+            //         nameLetter: 'Libra,A',
+            //         price: 2849.00,
+            //         quantity: 1
+            //     },
+            // ]
         }
     },
     computed: {
+        cartItems() {
+            return this.$store.getters.getCart
+        },
         subtotal() {
             return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)
         }

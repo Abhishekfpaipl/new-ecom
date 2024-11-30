@@ -7,7 +7,7 @@
 
         <div class="row g-4">
             <div v-for="collection in collections" :key="collection.id" class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 bg-transparent">
+                <router-link to="/collection-page" class="card h-100 border-0 bg-transparent">
                     <img :src="collection.image" :alt="collection.title" class="card-img-top rounded"
                         style="object-fit: cover; height: 300px;">
                     <div class="card-body text-center p-3">
@@ -15,7 +15,7 @@
                             {{ collection.title }}
                         </button>
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -31,32 +31,12 @@ export default {
     name: 'JewelryCollection',
     data() {
         return {
-            collections: [
-                {
-                    id: 1,
-                    title: 'TIMELESS',
-                    image: 'https://whitehathi.com/cdn/shop/files/timeless-image.jpg?v=1689011942',
-                    description: 'Classic jewelry pieces that never go out of style'
-                },
-                {
-                    id: 2,
-                    title: 'PERSONALISED',
-                    image: 'https://whitehathi.com/cdn/shop/files/Rectangle_24.jpg?v=1678790439',
-                    description: 'Custom-made jewelry pieces just for you'
-                },
-                {
-                    id: 3,
-                    title: 'KRYSTAL CANDY',
-                    image: 'https://whitehathi.com/cdn/shop/files/Krystal-Candy.jpg?v=1689012098',
-                    description: 'Vibrant and colorful statement pieces'
-                },
-                {
-                    id: 4,
-                    title: 'MANGALSUTRA',
-                    image: 'https://whitehathi.com/cdn/shop/files/Mangalsutra.jpg?v=1689012220',
-                    description: 'Traditional Indian wedding necklaces'
-                }
-            ]
+
+        }
+    },
+    computed: {
+        collections() {
+            return this.$store.getters.getCollections;
         }
     }
 }
