@@ -35,7 +35,7 @@
                         </router-link>
                     </div>
 
-                    <router-link to="/wishlist-page" class="text-decoration-none text-white">
+                    <router-link to="/account" class="text-decoration-none text-white">
                         <i class="bi bi-person-circle fs-5"></i>
                     </router-link>
                     <div class="position-relative">

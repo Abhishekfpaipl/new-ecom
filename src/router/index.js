@@ -41,6 +41,21 @@ const routes = [
     name: 'GiftPage',
     component: () => import('@/pages/GiftPage.vue')
   },
+  {
+    path: '/account',
+    name: 'AccountPage',
+    component: () => import('@/pages/AccountPage.vue')
+  },
+  {
+    path: '/address',
+    name: 'AddressPage',
+    component: () => import('@/pages/AddressPage.vue')
+  },
+  {
+    path: '/account-information',
+    name: 'AccountInformationPage',
+    component: () => import('@/pages/AccountInformationPage.vue')
+  },
   // {
   //   path: '/address-page',
   //   name: 'AddressPage',
