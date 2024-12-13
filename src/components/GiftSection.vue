@@ -12,7 +12,7 @@
                             style="max-width: 100%; height: auto;">
                         <p class="text-muted my-4 small" style="line-height: 1.8;">
                             Discover our edit of the ultimate can't-go-wrong gifts. If you want to make this years gift
-                            unforgettable, its got to be with a piece of jewellery from Chauhan Jewellers.
+                            unforgettable, its got to be with a piece of jewellery from Jagdamba Jewellers Jewellers.
                         </p>
                         <button class="btn btn-outline-dark px-4 py-2 text-uppercase" style="letter-spacing: 1px;">
                             Explore Gifts

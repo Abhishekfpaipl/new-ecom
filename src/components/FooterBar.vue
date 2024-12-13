@@ -12,7 +12,7 @@
                     </p>
                     <ul v-if="section.links" class="list-unstyled">
                         <li v-for="(link, index) in section.links" :key="index" class="text-start">
-                            <a :href="link.url">{{ link.text }}</a>
+                            <router-link :to="link.url">{{ link.text }}</router-link>
                         </li>
                     </ul>
                 </div>
@@ -58,12 +58,13 @@ export default {
                 {
                     title: 'CARE',
                     links: [
-                        { text: 'RETURNS AND REFUNDS', url: '#' },
-                        { text: 'SHIPPING POLICY', url: '#' },
-                        { text: 'JEWELLERY CARE', url: '#' },
-                        { text: 'WARRANTY', url: '#' },
-                        { text: 'CONTACT US', url: '#' },
-                        { text: 'TERMS & CONDITIONS', url: '#' }
+                        { text: 'ABOUT US', url: '/about-us' },
+                        { text: 'RETURNS AND REFUNDS', url: '/returns-and-refunds' },
+                        { text: 'SHIPPING POLICY', url: '/shipping-policy' },
+                        { text: 'JEWELLERY CARE', url: '/jewellery-care' },
+                        { text: 'WARRANTY', url: '/warranty' },
+                        { text: 'CONTACT US', url: '/contact-us' },
+                        { text: 'TERMS & CONDITIONS', url: '/terms' }
                     ]
                 },
                 {

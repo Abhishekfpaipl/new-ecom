@@ -19,7 +19,7 @@
                 <!-- Logo -->
                 <router-link to="/" class="navbar-brand" href="#">
                     <img src="/img/logoblack1.png" alt="White Hathi" height="60" />
-                    <span class="text-white">Chauhan</span>
+                    <span class="text-white fs-3">Jagdamba Jewellers</span>
                 </router-link>
 
                 <!-- Icons -->
@@ -103,7 +103,7 @@
                             <a class="nav-link text-white" href="#">ANKLETS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">ABOUT</a>
+                            <router-link class="nav-link text-white" to="/about-us">ABOUT</router-link>
                         </li>
                     </ul>
                 </div>

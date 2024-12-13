@@ -59,7 +59,7 @@ export default {
                 {
                     stars: 5,
                     content:
-                        "Chauhan's bracelets are nothing short of amazing! The intricate detailing and premium materials make them stand out. It was the perfect gift for my sister, and she absolutely loves it. Highly recommend for anyone looking for timeless jewelry!",
+                        "Jagdamba Jewellers's bracelets are nothing short of amazing! The intricate detailing and premium materials make them stand out. It was the perfect gift for my sister, and she absolutely loves it. Highly recommend for anyone looking for timeless jewelry!",
                     author: "Rajesh, Mumbai",
                     image: "/img/jewel3.jpg",
                 },

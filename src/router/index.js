@@ -42,6 +42,31 @@ const routes = [
     component: () => import('@/pages/GiftPage.vue')
   },
   {
+    path: '/jewellery-care',
+    name: 'JewelleryCare',
+    component: () => import('@/pages/JewelleryCare.vue')
+  },
+  {
+    path: '/terms',
+    name: 'TermsAndConditions',
+    component: () => import('@/pages/TermsAndConditions.vue')
+  },
+  {
+    path: '/returns-and-refunds',
+    name: 'ReturnAndRefunds',
+    component: () => import('@/pages/ReturnAndRefunds.vue')
+  },
+  {
+    path: '/warranty',
+    name: 'WarrantyPolicies',
+    component: () => import('@/pages/WarrantyPolicies.vue')
+  },
+  {
+    path: '/shipping-policy',
+    name: 'ShippingPolicy',
+    component: () => import('@/pages/ShippingPolicy.vue')
+  },
+  {
     path: '/account',
     name: 'AccountPage',
     component: () => import('@/pages/AccountPage.vue')
